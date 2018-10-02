@@ -1,0 +1,80 @@
+﻿object Form2: TForm2
+  Left = 0
+  Top = 0
+  Caption = 'Cadastro de Impressoras'
+  ClientHeight = 154
+  ClientWidth = 298
+  Position = ScreenCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnShow = FormShow
+  DesignerMasterStyle = 0
+  object Código: TLabel
+    Position.X = 64.000000000000000000
+    Position.Y = 18.000000000000000000
+    Size.Width = 60.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'C'#243'digo'
+    TabOrder = 0
+  end
+  object Nome: TLabel
+    Position.X = 64.000000000000000000
+    Position.Y = 50.000000000000000000
+    Size.Width = 60.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Nome'
+    TabOrder = 1
+  end
+  object Velocidade: TLabel
+    Position.X = 64.000000000000000000
+    Position.Y = 82.000000000000000000
+    Size.Width = 60.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Velocidade'
+    TabOrder = 2
+  end
+  object edtCodigo: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 3
+    Position.X = 128.000000000000000000
+    Position.Y = 18.000000000000000000
+  end
+  object edtNome: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 4
+    Position.X = 128.000000000000000000
+    Position.Y = 50.000000000000000000
+  end
+  object edtVelocidade: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 5
+    Position.X = 128.000000000000000000
+    Position.Y = 82.000000000000000000
+  end
+  object btnGravar: TButton
+    Position.X = 63.000000000000000000
+    Position.Y = 122.000000000000000000
+    TabOrder = 6
+    Text = 'Gravar'
+    OnClick = btnGravarClick
+  end
+  object btnFechar: TButton
+    Position.X = 148.000000000000000000
+    Position.Y = 122.000000000000000000
+    TabOrder = 7
+    Text = 'Fechar'
+    OnClick = btnFecharClick
+  end
+  object Line1: TLine
+    LineType = Bottom
+    Position.X = 61.000000000000000000
+    Position.Y = 114.000000000000000000
+    Size.Width = 170.000000000000000000
+    Size.Height = 1.000000000000000000
+    Size.PlatformDefault = False
+  end
+end

@@ -1,0 +1,283 @@
+object Form3: TForm3
+  Left = 0
+  Top = 0
+  Caption = 'Cadastro de Letras'
+  ClientHeight = 272
+  ClientWidth = 273
+  Position = DesktopCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnShow = FormShow
+  DesignerMasterStyle = 0
+  object chkA: TCheckBox
+    Position.X = 35.000000000000000000
+    Position.Y = 63.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 25
+    Text = 'A'
+  end
+  object chkB: TCheckBox
+    Position.X = 35.000000000000000000
+    Position.Y = 83.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 24
+    Text = 'B'
+  end
+  object chkC: TCheckBox
+    Position.X = 35.000000000000000000
+    Position.Y = 103.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 23
+    Text = 'C'
+  end
+  object chkD: TCheckBox
+    Position.X = 35.000000000000000000
+    Position.Y = 123.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 22
+    Text = 'D'
+  end
+  object chkE: TCheckBox
+    Position.X = 35.000000000000000000
+    Position.Y = 143.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 21
+    Text = 'E'
+  end
+  object chkF: TCheckBox
+    Position.X = 35.000000000000000000
+    Position.Y = 163.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 20
+    Text = 'F'
+  end
+  object chkG: TCheckBox
+    Position.X = 35.000000000000000000
+    Position.Y = 183.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 19
+    Text = 'G'
+  end
+  object chkH: TCheckBox
+    Position.X = 35.000000000000000000
+    Position.Y = 203.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 18
+    Text = 'H'
+  end
+  object chkI: TCheckBox
+    Position.X = 75.000000000000000000
+    Position.Y = 63.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 17
+    Text = 'I'
+  end
+  object chkJ: TCheckBox
+    Position.X = 75.000000000000000000
+    Position.Y = 83.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 16
+    Text = 'J'
+  end
+  object chkL: TCheckBox
+    Position.X = 75.000000000000000000
+    Position.Y = 103.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 15
+    Text = 'L'
+  end
+  object chkM: TCheckBox
+    Position.X = 75.000000000000000000
+    Position.Y = 123.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 14
+    Text = 'M'
+  end
+  object chkN: TCheckBox
+    Position.X = 75.000000000000000000
+    Position.Y = 143.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 13
+    Text = 'N'
+  end
+  object chkO: TCheckBox
+    Position.X = 75.000000000000000000
+    Position.Y = 163.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 12
+    Text = 'O'
+  end
+  object chkP: TCheckBox
+    Position.X = 75.000000000000000000
+    Position.Y = 183.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 11
+    Text = 'P'
+  end
+  object chkQ: TCheckBox
+    Position.X = 75.000000000000000000
+    Position.Y = 203.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 10
+    Text = 'Q'
+  end
+  object chkR: TCheckBox
+    Position.X = 115.000000000000000000
+    Position.Y = 63.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 9
+    Text = 'R'
+  end
+  object chkS: TCheckBox
+    Position.X = 115.000000000000000000
+    Position.Y = 83.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 8
+    Text = 'S'
+  end
+  object chkT: TCheckBox
+    Position.X = 115.000000000000000000
+    Position.Y = 103.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 7
+    Text = 'T'
+  end
+  object chkU: TCheckBox
+    Position.X = 115.000000000000000000
+    Position.Y = 123.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 6
+    Text = 'U'
+  end
+  object chkV: TCheckBox
+    Position.X = 115.000000000000000000
+    Position.Y = 143.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 5
+    Text = 'V'
+  end
+  object chkX: TCheckBox
+    Position.X = 115.000000000000000000
+    Position.Y = 163.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 4
+    Text = 'X'
+  end
+  object chkW: TCheckBox
+    Position.X = 115.000000000000000000
+    Position.Y = 183.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    Text = 'W'
+  end
+  object chkY: TCheckBox
+    Position.X = 115.000000000000000000
+    Position.Y = 203.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    Text = 'Y'
+  end
+  object chkZ: TCheckBox
+    Position.X = 154.000000000000000000
+    Position.Y = 83.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    Text = 'Z'
+  end
+  object btnGravar: TButton
+    Position.X = 57.000000000000000000
+    Position.Y = 239.000000000000000000
+    TabOrder = 27
+    Text = 'Gravar'
+    OnClick = btnGravarClick
+  end
+  object ComboBox1: TComboBox
+    Position.X = 16.000000000000000000
+    Position.Y = 32.000000000000000000
+    Size.Width = 241.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 28
+  end
+  object cbImpressoraFila: TLabel
+    Position.X = 16.000000000000000000
+    Position.Y = 11.000000000000000000
+    Text = 'Impressora da Fila'
+    TabOrder = 29
+  end
+  object Line1: TLine
+    LineType = Bottom
+    Position.X = 16.000000000000000000
+    Position.Y = 228.000000000000000000
+    Size.Width = 241.000000000000000000
+    Size.Height = 1.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object chkK: TCheckBox
+    Position.X = 154.000000000000000000
+    Position.Y = 63.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Text = 'K'
+  end
+  object Button1: TButton
+    Position.X = 145.000000000000000000
+    Position.Y = 239.000000000000000000
+    TabOrder = 26
+    Text = 'Fechar'
+    OnClick = Button1Click
+  end
+end
