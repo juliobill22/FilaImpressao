@@ -2,13 +2,13 @@ unit uImpressao;
 
 interface
 
-uses Classes, generics.collections, uDocumentos;
+uses Classes, generics.collections, uDocumentos, FMX.Grid;
 
   type
     tAction = (AcRunning, AcRestart);
 
     TImpressao = class
-     strict private
+     private
         FCodigo      : Integer;
         FNome        : String;
         FTempo       : Integer;
@@ -33,10 +33,14 @@ uses Classes, generics.collections, uDocumentos;
         procedure delDocsFila;
         function getDocsFila : String;
         function getQtdeDocsFila : Integer;
+        function getQtdeDocsImpresso : Integer;
         procedure addDocsImpresso(const aDocumento : TDocumento);
         procedure delDocsImpresso;
         function getDocsImpresso : String;
-        procedure processaImpressao(Action : tAction);
+        function getListDocsFila: TList<TDocumento>;
+        function getListDocsImpresso : TList<TDocumento>;
+        function getDocImpresso(Index : Integer) : TDocumento;
+        function getDocFila(Index : Integer) : TDocumento;
       published
 
     end;
@@ -58,12 +62,18 @@ end;
 
 procedure TImpressao.addDocsFila(const aDocumento: TDocumento);
 begin
+  if (self.FDocsFila = nil) then
+    self.FDocsFila := TList<TDocumento>.Create;
+
   self.FDocsFila.add(aDocumento);
 end;
 
 procedure TImpressao.addDocsImpresso(const aDocumento: TDocumento);
 begin
-  self.FDocsImpresso.add(aDocumento);
+  if (FDocsImpresso = nil) then
+    FDocsImpresso := TList<TDocumento>.Create;
+
+  FDocsImpresso.add(aDocumento);
 end;
 
 function TImpressao.getQtdeDocsFila : Integer;
@@ -74,33 +84,23 @@ begin
     result := 0;
 end;
 
-procedure TImpressao.processaImpressao(Action : tAction);
-var i, y : integer;
+function TImpressao.getQtdeDocsImpresso : Integer;
 begin
-  if (Action = AcRunning) then
-  begin
-    for i := 0 to FDocsFila.Count-1 do
-    begin
-      FDocsImpresso.Add(FDocsFila.Items[i]);
-      for y := 0 to FDocsFila[i].Letras.Count-1 do
-      begin
-        FDocsImpresso.Items[i].addLetra(FDocsFila.Items[i].Letras[y]);
-        FLetraAtual:= FDocsFila.Items[i].Letras[y];
-        sleep(FTempo);
-      end;
-    end;
-    FStatus := 'P';
-  end
-  else if (Action = AcRestart) then
-  begin
-    for i := 0 to FDocsImpresso.Count-1 do
-    begin
-      FDocsImpresso.Delete(i);
-      FLetraAtual:= FDocsFila.Items[i].Letras[0];
-      sleep(FTempo);
-    end;
-    FStatus := 'R';
-  end;
+  if (self.FDocsImpresso <> nil) then
+    result := self.FDocsImpresso.Count
+  else
+    result := 0;
+end;
+
+
+function TImpressao.getDocFila(Index: Integer): TDocumento;
+begin
+  result := FDocsFila.Items[Index];
+end;
+
+function TImpressao.getDocImpresso(Index: Integer): TDocumento;
+begin
+  result := FDocsImpresso.Items[Index];
 end;
 
 function TImpressao.getDocsFila : String;
@@ -119,6 +119,20 @@ begin
             self.FDocsFila.Items[i].Letras[y] + ';';
     end;
   end;
+end;
+
+function TImpressao.getListDocsFila: TList<TDocumento>;
+begin
+  if (self.FDocsFila = nil) then
+    self.FDocsFila := TList<TDocumento>.Create;
+  result := self.FDocsFila;
+end;
+
+function TImpressao.getListDocsImpresso: TList<TDocumento>;
+begin
+  if (self.FDocsImpresso = nil) then
+    self.FDocsImpresso := TList<TDocumento>.Create;
+  result := self.FDocsImpresso;
 end;
 
 function TImpressao.getDocsImpresso : String;
@@ -140,14 +154,15 @@ begin
 end;
 
 procedure TImpressao.delDocsFila;
-var i : integer;
 begin
-  FreeAndNil(self.FDocsFila);
+  FreeAndNil(FDocsFila);
+  FDocsFila := TList<TDocumento>.Create;
 end;
 
 procedure TImpressao.delDocsImpresso;
 begin
-  FreeAndNil(self.FDocsImpresso);
+  FreeAndNil(FDocsImpresso);
+  FDocsImpresso := TList<TDocumento>.Create;
 end;
 
 destructor TImpressao.Destroy;

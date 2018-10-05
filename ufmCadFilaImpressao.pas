@@ -24,11 +24,9 @@ type
     procedure FormShow(Sender: TObject);
   private
     FListImpressao : TList<TImpressao>;
-    FListThread : Tlist<TThread>;
   public
     constructor Create(AOwner: TComponent;
-      const pListImpressao: TList<TImpressao>;
-      const pListThread : Tlist<TThread>);
+      const pListImpressao: TList<TImpressao>);
   end;
 
 var
@@ -76,23 +74,17 @@ begin
     edtCodigo.SetFocus;
     FListImpressao.Add(vImpressao);
 
-    vThread     := TImpressaoInThread.Create(false);
-    FListThread := Tlist<TThread>.Create;
-    FListThread.Add(vThread);
-
-    ShowMessage('A impressão '+ edtNome.Text + ' foi gerada com sucesso!')
+    ShowMessage('A impressão '+ edtNome.Text + ' foi gerada com sucesso!');
 
   end;
 end;
 
 Constructor TForm2.Create(AOwner: TComponent;
-  const pListImpressao: TList<TImpressao>;
-  const pListThread : Tlist<TThread>);
+  const pListImpressao: TList<TImpressao>);
 var vImpressao : TImpressao;
 begin
   inherited Create(AOwner);
   FListImpressao := pListImpressao;
-  FListThread := pListThread;
 end;
 
 procedure TForm2.FormShow(Sender: TObject);

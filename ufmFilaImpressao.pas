@@ -18,9 +18,7 @@ type
     Button4: TButton;
     Button5: TButton;
     labelautoria: TLabel;
-    Timer1: TTimer;
     procedure btnCadImpressaoClick(Sender: TObject);
-    procedure FormShow(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
     procedure Grid1GetValue(Sender: TObject; const ACol, ARow: Integer;
@@ -29,11 +27,10 @@ type
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
-    procedure Timer1Timer(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
   public
     FListImpressao : TList<TImpressao>;
-    FListThread : Tlist<TThread>;
   end;
 
 var
@@ -47,7 +44,7 @@ uses ufmCadFilaImpressao, uGrid, ufmCadLetras;
 
 procedure TForm1.btnCadImpressaoClick(Sender: TObject);
 begin
-  Form2 := TForm2.Create(Application, FListImpressao, FListThread);
+  Form2 := TForm2.Create(Application, FListImpressao);
   Form2.ShowModal;
   TGridList.populaGrid(Grid1, FListImpressao);
 end;
@@ -73,6 +70,7 @@ begin
         ShowMessage('Nenhuma letra com documento cadastrada!');
     end;
   end;
+  TGridList.populaGrid(Grid1, FListImpressao);
 end;
 
 procedure TForm1.Button3Click(Sender: TObject);
@@ -87,6 +85,7 @@ begin
       begin
         FListImpressao.Items[Grid1.Selected].delDocsFila;
         FListImpressao.Items[Grid1.Selected].delDocsImpresso;
+        FListImpressao.Items[Grid1.Selected].LetraAtual := #0;
         FListImpressao.Items[Grid1.Selected].Status := Char('R');
       end;
     end;
@@ -103,11 +102,14 @@ begin
     else
     begin
       if (FListImpressao.Items[Grid1.Selected].DocsFila.Count <> 0) then
-        FListImpressao.Items[Grid1.Selected].Status := 'T'
+      begin
+        FListImpressao.Items[Grid1.Selected].Status := 'T';
+      end
       else
         ShowMessage('Nenhuma letra com documento cadastrada!');
     end;
   end;
+  TGridList.populaGrid(Grid1, FListImpressao);
 end;
 
 procedure TForm1.Button5Click(Sender: TObject);
@@ -119,7 +121,6 @@ begin
     else
     begin
       if (MessageDlg('Deseja excluir a impressão ''' + FListImpressao.Items[Grid1.Selected].Nome + '''', TMsgDlgType.mtConfirmation, [TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], 0) = mrYes) then
-
         FListImpressao.Delete(Grid1.Selected);
     end;
   end;
@@ -131,10 +132,9 @@ begin
   TGridList.populaGrid(Grid1, FListImpressao);
 end;
 
-procedure TForm1.FormShow(Sender: TObject);
+procedure TForm1.FormCreate(Sender: TObject);
 begin
   FListImpressao := TList<TImpressao>.Create();
-  FListThread := Tlist<TThread>.Create();
   TGridList.populaGrid(Grid1, FListImpressao);
 end;
 
@@ -165,12 +165,6 @@ begin
     else if ACol = 7 then
       Value := FListImpressao.Items[ARow].getDocsImpresso;
   end;
-end;
-
-procedure TForm1.Timer1Timer(Sender: TObject);
-begin
-  Grid1.RowCount:= 0;
-  Grid1.RowCount:= FListImpressao.Count;
 end;
 
 end.

@@ -8,7 +8,7 @@ object Form1: TForm1
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
-  OnShow = FormShow
+  OnCreate = FormCreate
   DesignerMasterStyle = 0
   object btnCadImpressao: TButton
     Position.X = 8.000000000000000000
@@ -39,7 +39,7 @@ object Form1: TForm1
     Size.Height = 217.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 3
-    RowCount = 5
+    RowCount = 0
     OnGetValue = Grid1GetValue
     Viewport.Width = 797.000000000000000000
     Viewport.Height = 192.000000000000000000
@@ -92,10 +92,5 @@ object Form1: TForm1
     Size.PlatformDefault = False
     Text = 'Nox Automa'#231#227'o - Candidato: Julio Bill Schvenger 2018'
     TabOrder = 9
-  end
-  object Timer1: TTimer
-    OnTimer = Timer1Timer
-    Left = 536
-    Top = 264
   end
 end
