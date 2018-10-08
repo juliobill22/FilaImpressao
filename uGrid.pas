@@ -5,18 +5,20 @@ interface
 uses System.Rtti, FMX.Grid, generics.collections, uImpressao, FMX.Types;
 
   type
+
     TGridList = class
       private
         FGrid : TGrid;
         FList : TList<TImpressao>;
       protected
       public
+        class procedure setStado(Index : Integer; Action : tAction; const List : TList<TImpressao>);
+        class procedure clearDocsImpressos(const List : TList<TImpressao>; Item : Integer);
         class procedure refrehGrid(const Grid : TGrid; const List : TList<TImpressao>);
         class procedure populaGrid(const Grid : TGrid; const List : TList<TImpressao>);
-        class procedure processaImpressao(
-          Grid : TGrid;
-          List : TList<TImpressao>;
-          Action : tAction);
+        class procedure processaImpressao(Grid : TGrid; List : TList<TImpressao>; Action : tAction; Item : Integer);
+        class procedure processaImpressaoAll(Grid : TGrid; List : TList<TImpressao>; Action : tAction);
+        class procedure imprDocList(i : Integer; List : TList<TImpressao>);
       published
     end;
 
@@ -30,10 +32,18 @@ begin
   Grid.RowCount:= List.Count;
 end;
 
+class procedure TGridList.setStado(Index: Integer; Action: tAction;
+  const List: TList<TImpressao>);
+begin
+  case Action of
+    AcRunning: List.Items[Index].Status:= 'R';
+    AcRestart: List.Items[Index].Status:= 'T';
+    AcStop   : List.Items[Index].Status:= 'S';
+  end;
+end;
+
 class procedure TGridList.populaGrid(const Grid : TGrid; const List : TList<TImpressao>);
-
   var i : integer;
-
   procedure createColumn(Name: String; Header: String; width : integer);
    var col : TColumn;
   begin
@@ -43,9 +53,7 @@ class procedure TGridList.populaGrid(const Grid : TGrid; const List : TList<TImp
     col.Width  := width;
     Grid.AddObject(col);
   end;
-
 begin
-
   with Grid do
   begin
     if Grid.ColumnCount = 0 then
@@ -60,100 +68,71 @@ begin
       createColumn('cldocimpres', 'Docs. impressos', 200);
     end;
   end;
+  refrehGrid(Grid, List);
+end;
 
-  for i := 0 to List.Count-1 do
+class procedure TGridList.imprDocList(i : Integer; List : TList<TImpressao>);
+var y, z : integer;
+    letra : Char;
+    docu : TDocumento;
+begin
+  if (List.Items[i].getQtdeDocsFila > 0) then
   begin
-    case List.Items[i].Status of
-      'R': processaImpressao(Grid, List, AcRunning); //running
-      'T': processaImpressao(Grid, List, AcRestart); //paused
+    for y := 0 to List.Items[i].DocsFila.Count-1 do
+    begin
+      docu := TDocumento.Create;
+      List.Items[i].DocsImpresso.Add(docu);
+      for z := 0 to List.Items[i].DocsFila[y].Letras.Count-1 do
+      begin
+        letra := List.Items[i].DocsFila.Items[y].getLetras(z);
+        List.Items[i].DocsImpresso.Items[y].addLetra(letra);
+        List.Items[i].LetraAtual := letra;
+        sleep(List.Items[i].Tempo);
+      end;
     end;
   end;
-
-  refrehGrid(Grid, List);
-
 end;
 
 class procedure TGridList.processaImpressao(
   Grid : TGrid;
   List : TList<TImpressao>;
-  Action : tAction);
-
-var i, y, z : integer;
-    letra : Char;
-    docu : TDocumento;
-
-    procedure clearDocsImpressos;
-    var i, y : integer;
-    begin
-      for i := 0 to List.Count-1 do
-      begin
-        if (List.Items[i].getQtdeDocsFila > 0) then
-        begin
-          for y := 0 to List.Items[i].DocsFila.Count-1 do
-            List.Items[i].DocsImpresso.Clear;
-        end;
-      end;
-    end;
-
-    procedure setStado(Index : Integer; ac : tAction);
-    begin
-      case Action of
-        AcRunning: List.Items[Index].Status := 'P';
-        AcRestart: List.Items[Index].Status := 'R';
-      end;
-    end;
-
+  Action : tAction;
+  Item : Integer);
 begin
   try
-    clearDocsImpressos;
+    clearDocsImpressos(List, Item);
     case Action of
       AcRunning:
         begin
-          for i := 0 to List.Count-1 do
-          begin
-            if (List.Items[i].getQtdeDocsFila > 0) then
-            begin
-              for y := 0 to List.Items[i].DocsFila.Count-1 do
-              begin
-                docu := TDocumento.Create;
-                List.Items[i].DocsImpresso.Add(docu);
-                for z := 0 to List.Items[i].DocsFila[y].Letras.Count-1 do
-                begin
-                  letra := List.Items[i].DocsFila.Items[y].getLetras(z);
-                  List.Items[i].DocsImpresso.Items[y].addLetra(letra);
-                  List.Items[i].LetraAtual := letra;
-                end;
-              end;
-            end;
-            setStado(i, AcRunning);
-          end;
+          imprDocList(Item, List);
+          setStado(Item, AcStop, List);
         end;
-
       AcRestart:
         begin
-          for i := 0 to List.Count-1 do
-          begin
-            setStado(i, AcRestart);
-            if (List.Items[i].getQtdeDocsFila > 0) then
-            begin
-              for y := 0 to List.Items[i].DocsFila.Count-1 do
-              begin
-                docu := TDocumento.Create;
-                List.Items[i].DocsImpresso.Add(docu);
-                for z := 0 to List.Items[i].DocsFila[y].Letras.Count-1 do
-                begin
-                  letra := List.Items[i].DocsFila.Items[y].getLetras(z);
-                  List.Items[i].DocsImpresso.Items[y].addLetra(letra);
-                  List.Items[i].LetraAtual := letra;
-                end;
-              end;
-            end;
-            setStado(i, AcRunning);
-          end;
+          setStado(Item, AcRestart, List);
+          imprDocList(Item, List);
+          setStado(Item, AcStop, List);
         end;
     end;
   finally
   end;
+end;
+
+class procedure TGridList.processaImpressaoAll(
+  Grid : TGrid;
+  List : TList<TImpressao>;
+  Action : tAction);
+var i : Integer;
+begin
+  for i := 0 to List.Count-1 do
+    processaImpressao(Grid, List, Action, i);
+end;
+
+class procedure TGridList.clearDocsImpressos(const List : TList<TImpressao>; Item : Integer);
+var y : integer;
+begin
+  if (List.Items[Item].getQtdeDocsFila > 0) then
+    List.Items[Item].DocsImpresso.Clear;
 end;
 
 end.

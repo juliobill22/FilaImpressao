@@ -25,8 +25,7 @@ type
   private
     FListImpressao : TList<TImpressao>;
   public
-    constructor Create(AOwner: TComponent;
-      const pListImpressao: TList<TImpressao>);
+    constructor Create(AOwner: TComponent; const pListImpressao: TList<TImpressao>);
   end;
 
 var
@@ -43,7 +42,6 @@ end;
 
 procedure TForm2.btnGravarClick(Sender: TObject);
 var vImpressao : TImpressao;
-    vThread    : TImpressaoInThread;
 begin
   if (edtCodigo.Text = '') then
   begin
@@ -67,7 +65,7 @@ begin
     vImpressao.Nome   := edtNome.Text;
     vImpressao.Tempo  := StrToInt(edtVelocidade.Text);
     vImpressao.DataCriacao := Now;
-    vImpressao.Status := 'R';
+    vImpressao.Status := 'P';
     edtCodigo.Text    := '';
     edtNome.Text      := '';
     edtVelocidade.Text:= '';
@@ -79,8 +77,7 @@ begin
   end;
 end;
 
-Constructor TForm2.Create(AOwner: TComponent;
-  const pListImpressao: TList<TImpressao>);
+Constructor TForm2.Create(AOwner: TComponent; const pListImpressao: TList<TImpressao>);
 var vImpressao : TImpressao;
 begin
   inherited Create(AOwner);

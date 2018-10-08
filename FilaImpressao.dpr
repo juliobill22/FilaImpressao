@@ -8,7 +8,8 @@ uses
   uDocumentos in 'uDocumentos.pas',
   ufmCadFilaImpressao in 'ufmCadFilaImpressao.pas' {Form2},
   uGrid in 'uGrid.pas',
-  ufmCadLetras in 'ufmCadLetras.pas' {Form3};
+  ufmCadLetras in 'ufmCadLetras.pas' {Form3},
+  uThread in 'uThread.pas';
 
 {$R *.res}
 

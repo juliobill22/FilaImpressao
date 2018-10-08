@@ -2,82 +2,33 @@ unit uThread;
 
 interface
 
-uses Classes, FMX.Dialogs, SyncObjs;
+uses
+  System.Classes, FMX.Grid, generics.collections, uImpressao;
 
-  type
-    TImpressaoInThread = class(TThread)
-      private
-        FCriticalSection: TCriticalSection;
-      public
-        constructor Create(CreateSuspended: Boolean); overload;
-        procedure Synchronize(AMethod: TThreadMethod); overload; inline;
-        procedure Synchronize(AThreadProc: TThreadProcedure); overload; inline;
-        class procedure Synchronize(const AThread: TThread; AMethod: TThreadMethod); overload; static;
-        class procedure Synchronize(const AThread: TThread; AThreadProc: TThreadProcedure); overload; static;
-      protected
-        procedure Execute; override;
-        procedure Resume; deprecated;
-        procedure Start;
-        procedure Suspend; deprecated;
-        procedure Terminate;
-      published
-    end;
+type
+  TThreadListaImpressao = class(TThread)
+  private
+    FGrid : TGrid;
+    FList : TList<TImpressao>;
+    FAction : tAction;
+    FItem : Integer;
+  protected
+  public
+    procedure Execute; override;
+    property Grid  : TGrid read FGrid write FGrid;
+    property List  : TList<TImpressao> read FList write FList;
+    property Action: tAction read FAction write FAction;
+    property Item  : Integer read FItem  write FItem;
+  end;
 
 implementation
 
-constructor TImpressaoInThread.Create(CreateSuspended: boolean);
+uses uGrid;
+
+procedure TThreadListaImpressao.Execute;
+var li : TGridList;
 begin
-  inherited Create(CreateSuspended);
-  Priority := tpIdle;
-  FreeOnTerminate := CreateSuspended;
-  FCriticalSection := TCriticalSection.Create;
-end;
-
-procedure TImpressaoInThread.Execute;
-begin
-
-end;
-
-procedure TImpressaoInThread.Resume;
-begin
-
-end;
-
-procedure TImpressaoInThread.Start;
-begin
-
-end;
-
-procedure TImpressaoInThread.Suspend;
-begin
-
-end;
-
-procedure TImpressaoInThread.Synchronize(AMethod: TThreadMethod);
-begin
-
-end;
-
-procedure TImpressaoInThread.Synchronize(AThreadProc: TThreadProcedure);
-begin
-
-end;
-
-class procedure TImpressaoInThread.Synchronize(const AThread: TThread;
-  AMethod: TThreadMethod);
-begin
-
-end;
-
-class procedure TImpressaoInThread.Synchronize(const AThread: TThread;
-  AThreadProc: TThreadProcedure);
-begin
-
-end;
-
-procedure TImpressaoInThread.Terminate;
-begin
-
+  TGridList.processaImpressao(FGrid, Flist, FAction, FItem);
 end;
 
 end.

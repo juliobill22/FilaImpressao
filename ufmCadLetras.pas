@@ -60,6 +60,7 @@ uses uDocumentos;
 
 procedure TForm3.btnGravarClick(Sender: TObject);
 var vDocumento : TDocumento;
+    i : Integer;
 begin
   if ComboBox1.Count > 0 then
   begin
@@ -123,7 +124,10 @@ begin
 
     vDocumento.CodigoFila := FListImpressao.Items[ComboBox1.Selected.Index].getQtdeDocsFila + 1;
     FListImpressao.Items[ComboBox1.Selected.Index].addDocsFila(vDocumento);
-    FListImpressao.Items[ComboBox1.Selected.Index].Status := 'R';
+    FListImpressao.Items[ComboBox1.Selected.Index].Status    := 'R';
+    for I := 0 to FListImpressao.Count-1 do
+      FListImpressao.Items[i].ItemSelec:= 0;
+    FListImpressao.Items[ComboBox1.Selected.Index].ItemSelec:= ComboBox1.Selected.Index;
 
     chkA.Data:= False;
     chkB.Data:= False;

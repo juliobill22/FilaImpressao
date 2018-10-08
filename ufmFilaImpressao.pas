@@ -40,20 +40,57 @@ implementation
 
 {$R *.fmx}
 
-uses ufmCadFilaImpressao, uGrid, ufmCadLetras;
+uses ufmCadFilaImpressao, uGrid, ufmCadLetras, uThread;
 
 procedure TForm1.btnCadImpressaoClick(Sender: TObject);
+var thread : TThreadListaImpressao;
 begin
-  Form2 := TForm2.Create(Application, FListImpressao);
-  Form2.ShowModal;
-  TGridList.populaGrid(Grid1, FListImpressao);
+  try
+    Form2 := TForm2.Create(Application, FListImpressao);
+    Form2.ShowModal;
+    thread:= TThreadListaImpressao.Create(True);
+    thread.FreeOnTerminate := True;
+    thread.Resume;
+    thread.Grid   := Grid1;
+    thread.List   := FListImpressao;
+    thread.Action := AcStop;
+    thread.Item   := FListImpressao.Count-1;
+    thread.execute;
+    TGridList.populaGrid(Grid1, FListImpressao);
+  finally
+
+  end;
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
+var thread : TThreadListaImpressao;
+  function getItemSelec : Integer;
+  var i : integer;
+  begin
+    result:= 0;
+    for I := 0 to FListImpressao.Count-1 do
+    begin
+      if FListImpressao.Items[I].ItemSelec > 0 then
+        result:= FListImpressao.Items[I].ItemSelec;
+        break;
+    end;
+  end;
 begin
-  Form3 := TForm3.Create(Application, FListImpressao);
-  Form3.ShowModal;
-  TGridList.populaGrid(Grid1, FListImpressao);
+  try
+    Form3 := TForm3.Create(Application, FListImpressao);
+    Form3.ShowModal;
+    thread:= TThreadListaImpressao.Create(True);
+    thread.FreeOnTerminate := True;
+    thread.Resume;
+    thread.Grid   := Grid1;
+    thread.List   := FListImpressao;
+    thread.Action := AcRunning;
+    thread.Item   := getItemSelec;
+    thread.execute;
+    TGridList.populaGrid(Grid1, FListImpressao);
+  finally
+
+  end;
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
@@ -104,6 +141,9 @@ begin
       if (FListImpressao.Items[Grid1.Selected].DocsFila.Count <> 0) then
       begin
         FListImpressao.Items[Grid1.Selected].Status := 'T';
+        TGridList.processaImpressao(Grid1, FListImpressao, AcRestart, Grid1.Selected);
+        TGridList.populaGrid(Grid1, FListImpressao);
+        FListImpressao.Items[Grid1.Selected].Status := 'R';
       end
       else
         ShowMessage('Nenhuma letra com documento cadastrada!');
@@ -154,8 +194,9 @@ begin
     else if ACol = 4 then
     begin
       case FListImpressao.Items[ARow].Status of
-        'P' : Value := 'Parado';
+        'P' : Value := 'Aguardando';
         'R' : Value := 'Iniciado';
+        'S' : Value := 'Finalizado';
       end;
     end
     else if ACol = 5 then
