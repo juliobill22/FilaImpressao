@@ -58,7 +58,6 @@ begin
     thread.execute;
     TGridList.populaGrid(Grid1, FListImpressao);
   finally
-
   end;
 end;
 
@@ -89,7 +88,6 @@ begin
     thread.execute;
     TGridList.populaGrid(Grid1, FListImpressao);
   finally
-
   end;
 end;
 
@@ -131,6 +129,7 @@ begin
 end;
 
 procedure TForm1.Button4Click(Sender: TObject);
+var thread : TThreadListaImpressao;
 begin
   if Grid1.RowCount > 0 then
   begin
@@ -141,9 +140,15 @@ begin
       if (FListImpressao.Items[Grid1.Selected].DocsFila.Count <> 0) then
       begin
         FListImpressao.Items[Grid1.Selected].Status := 'T';
-        TGridList.processaImpressao(Grid1, FListImpressao, AcRestart, Grid1.Selected);
-        TGridList.populaGrid(Grid1, FListImpressao);
-        FListImpressao.Items[Grid1.Selected].Status := 'R';
+        thread:= TThreadListaImpressao.Create(True);
+        thread.FreeOnTerminate := True;
+        thread.Resume;
+        thread.Grid   := Grid1;
+        thread.List   := FListImpressao;
+        thread.Action := AcRestart;
+        thread.Item   := Grid1.Selected;
+        thread.execute;
+        FListImpressao.Items[Grid1.Selected].Status := 'S';
       end
       else
         ShowMessage('Nenhuma letra com documento cadastrada!');

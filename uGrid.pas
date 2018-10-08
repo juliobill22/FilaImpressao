@@ -66,9 +66,9 @@ begin
       createColumn('clletraimpressa', 'Letra', 40);
       createColumn('cldocfila','Docs. fila', 200);
       createColumn('cldocimpres', 'Docs. impressos', 200);
+      refrehGrid(Grid, List);
     end;
   end;
-  refrehGrid(Grid, List);
 end;
 
 class procedure TGridList.imprDocList(i : Integer; List : TList<TImpressao>);
