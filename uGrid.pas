@@ -54,21 +54,18 @@ class procedure TGridList.populaGrid(const Grid : TGrid; const List : TList<TImp
     Grid.AddObject(col);
   end;
 begin
-  with Grid do
+  if Grid.ColumnCount = 0 then
   begin
-    if Grid.ColumnCount = 0 then
-    begin
-      createColumn('clcodigo','Código', 50);
-      createColumn('clnome','Nome', 120);
-      createColumn('cltempoimpress', 'Tempo', 50);
-      createColumn('cldatacria', 'Data Criação', 130);
-      createColumn('clstatusimpres','Status', 50);
-      createColumn('clletraimpressa', 'Letra', 40);
-      createColumn('cldocfila','Docs. fila', 200);
-      createColumn('cldocimpres', 'Docs. impressos', 200);
-      refrehGrid(Grid, List);
-    end;
+    createColumn('clcodigo','Código', 50);
+    createColumn('clnome','Nome', 120);
+    createColumn('cltempoimpress', 'Tempo', 50);
+    createColumn('cldatacria', 'Data Criação', 130);
+    createColumn('clstatusimpres','Status', 50);
+    createColumn('clletraimpressa', 'Letra', 40);
+    createColumn('cldocfila','Docs. fila', 200);
+    createColumn('cldocimpres', 'Docs. impressos', 200);
   end;
+  refrehGrid(Grid, List);
 end;
 
 class procedure TGridList.imprDocList(i : Integer; List : TList<TImpressao>);

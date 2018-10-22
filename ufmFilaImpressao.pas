@@ -79,8 +79,6 @@ begin
     Form3 := TForm3.Create(Application, FListImpressao);
     Form3.ShowModal;
     thread:= TThreadListaImpressao.Create(True);
-    thread.FreeOnTerminate := True;
-    thread.Resume;
     thread.Grid   := Grid1;
     thread.List   := FListImpressao;
     thread.Action := AcRunning;
@@ -88,6 +86,7 @@ begin
     thread.execute;
     TGridList.populaGrid(Grid1, FListImpressao);
   finally
+    thread.Free;
   end;
 end;
 
@@ -139,16 +138,18 @@ begin
     begin
       if (FListImpressao.Items[Grid1.Selected].DocsFila.Count <> 0) then
       begin
-        FListImpressao.Items[Grid1.Selected].Status := 'T';
-        thread:= TThreadListaImpressao.Create(True);
-        thread.FreeOnTerminate := True;
-        thread.Resume;
-        thread.Grid   := Grid1;
-        thread.List   := FListImpressao;
-        thread.Action := AcRestart;
-        thread.Item   := Grid1.Selected;
-        thread.execute;
-        FListImpressao.Items[Grid1.Selected].Status := 'S';
+        try
+          FListImpressao.Items[Grid1.Selected].Status := 'T';
+          thread:= TThreadListaImpressao.Create(True);
+          thread.Grid   := Grid1;
+          thread.List   := FListImpressao;
+          thread.Action := AcRestart;
+          thread.Item   := Grid1.Selected;
+          thread.execute;
+          FListImpressao.Items[Grid1.Selected].Status := 'S';
+        finally
+          thread.Free;
+        end;
       end
       else
         ShowMessage('Nenhuma letra com documento cadastrada!');

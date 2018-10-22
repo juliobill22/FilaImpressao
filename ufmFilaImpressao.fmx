@@ -42,8 +42,8 @@ object Form1: TForm1
     TabOrder = 3
     RowCount = 0
     OnGetValue = Grid1GetValue
-    Viewport.Width = 797.000000000000000000
-    Viewport.Height = 192.000000000000000000
+    Viewport.Width = 801.000000000000000000
+    Viewport.Height = 217.000000000000000000
   end
   object Button2: TButton
     Anchors = [akTop, akRight]

@@ -26,7 +26,6 @@ implementation
 uses uGrid;
 
 procedure TThreadListaImpressao.Execute;
-var li : TGridList;
 begin
   TGridList.processaImpressao(FGrid, Flist, FAction, FItem);
 end;
